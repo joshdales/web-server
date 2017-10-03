@@ -20,13 +20,13 @@ loop do                                             # Server runs forever
   filename = lines[0].gsub(/GET \//, '').gsub(/\ HTTP.*/, '')
 
   if File.exists?(filename)
+    response_body = File.read(filename)
     success_header = []
     success_header << "HTTP/1.1 200 OK"
     success_header << "Content-Type: text/html" # should reflect the appropriate content type (HTML, CSS, text, etc)
     success_header << "Content-Length: #{response_body.length}" # should be the actual size of the response body
     success_header << "Connection: close"
     header = success_header.join("\r\n")
-    response_body = File.read(filename)
   else
     not_found_header = []
     not_found_header << "HTTP/1.1 404 Not Found"
